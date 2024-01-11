@@ -1,0 +1,64 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: Simple CloudFormation template for showing CloudFormation Git Sync
+
+Metadata:
+  ChangeLog:
+    "v1.0.0":
+      - inital release
+
+Parameters:
+
+  VersionParam:
+    Description: CIT template version
+    Type: String
+    Default: v1.0.0
+    
+  ContactEmailParam:
+    Description: CIT contact email tag value version
+    Type: String
+    Default: info@example.com
+    
+  SourceURLParam:
+    Description: URL of this template in source code repository (not necessarily public)
+    Type: String
+    Default: https://github.com/CU-CommunityApps/ct-cloudformation-git-sync-example/blob/main/template.yml
+
+  EnvironmentParam:
+    Description: Environment for the resources this template creates.
+    Type: String
+    AllowedValues:
+      - dev
+      - test
+      - prod
+  
+  DocumentationURLParam:
+    Description: URL of documentation about this deployment or these resources
+    Type: String
+    Default: https://confluence.cornell.edu/display/CLOUD
+
+Mappings: {}
+
+Conditions: {}
+
+Resources:
+
+  Topic:
+    Type: AWS::SNS::Topic
+    DeletionPolicy: Delete
+    Properties:
+      TopicName: !Sub "${EnvironmentParam}-cloudformation-git-sync-example"
+      Tags:
+        - Key: Environment
+          Value: !Ref EnvironmentParam
+        - Key: Description
+          Value: This is the exampe resource
+        - Key: Documentation
+          Value: !Ref DocumentationURLParam
+        - Key: cit:contact-email
+          Value: !Ref ContactEmailParam
+        - Key: cit:version
+          Value: !Ref VersionParam
+        - Key: cit:source
+          Value:  !Ref SourceURLParam
