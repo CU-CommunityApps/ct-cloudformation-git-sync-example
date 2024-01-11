@@ -1,0 +1,6 @@
+template-file-path: ./template.yml
+
+parameters: 
+    EnvironmentParam: dev
+tags:
+    ExampleTag: "ExampleValue"
